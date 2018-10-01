@@ -25,27 +25,22 @@ class Car:
 
 
 class Weather:
-    def __init__(self, wind_speed):
-        self._wind_speed = randint(0, wind_speed)
+    def __init__(self, max_wind_speed):
+        self._wind_speed = randint(0, max_wind_speed)
 
     @property
     def wind_speed(self):
         return self._wind_speed
 
 
-def singleton(cls):
-    instances = {}
-
-    def wrapper(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-
-    return wrapper
-
-
-@singleton
 class Competition:
+    instance = None
+    def __new__(cls, *args):
+        if cls.instance is None:
+            cls.instance = super().__new__(cls)
+
+        return cls.instance
+
     def __init__(self, distance):
         self._distance = distance
 
@@ -76,4 +71,4 @@ class Competition:
 
 cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
 competition = Competition(1000)
-competition.start(cars, 20)
+competition.start(cars, 20)  #get competitors and max_wind_speed
