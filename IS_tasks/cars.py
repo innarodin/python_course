@@ -60,6 +60,8 @@ class Competition:
                     _speed = (competitor_time / car.time_to_max) * car.max_speed
                     if _speed > wind_speed:
                         _speed -= (car.drag_coef * wind_speed)
+                    if _speed > car.max_speed:
+                        _speed = car.max_speed
 
                 competitor_time += float(1) / _speed
 
@@ -70,5 +72,5 @@ class Competition:
 
 
 cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
-competition = Competition(1000)
+competition = Competition(10000)
 competition.start(cars, 20)  #get competitors and max_wind_speed
