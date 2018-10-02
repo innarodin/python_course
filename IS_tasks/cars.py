@@ -67,10 +67,10 @@ class Competition:
 
             print("Car <%s> result: %f" % (competitor_name, competitor_time))
             results[competitor_name] = competitor_time
-
-        print("WINNER!", list(results.keys())[list(results.values()).index(min(results.values()))], "wins!")
+        print("WINNER!", sorted(results.items(), key=lambda x: x[1])[0][0], "wins!")
 
 
 cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
 competition = Competition(10000)
 competition.start(cars, 20)  #get competitors and max_wind_speed
+
