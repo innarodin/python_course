@@ -71,7 +71,8 @@ class Competition:
         print("WINNER! {} wins!".format(sorted(results.items(), key=lambda x: x[1])[0][0]))
 
 
-cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
-competition = Competition(10000)
-competition.start(cars, 20)  #get competitors and max_wind_speed
+if __name__ == '__main__':
+    cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
+    competition = Competition(10000)
+    competition.start(cars, 20)  #get competitors and max_wind_speed
 
