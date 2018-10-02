@@ -68,7 +68,7 @@ class Competition:
             print("Car <%s> result: %f" % (competitor_name, competitor_time))
             results[competitor_name] = competitor_time
 
-        print("WINNER!", sorted(results.items(), key=lambda x: x[1])[0][0], "wins!")
+        print("WINNER! {} wins!".format(sorted(results.items(), key=lambda x: x[1])[0][0]))
 
 
 cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
