@@ -10,7 +10,8 @@ class Car:
         'sx4': {"max_speed": 180, "drag_coef": 0.33, "time_to_max": 44},
     }
 
-    def __init__(self, max_speed, drag_coef, time_to_max):
+    def __init__(self, name, max_speed, drag_coef, time_to_max):
+        self.name = name
         self.max_speed = max_speed
         self.drag_coef = drag_coef
         self.time_to_max = time_to_max
@@ -18,6 +19,7 @@ class Car:
     @classmethod
     def instance(cls, car):
         return cls(
+            car,
             cls.CAR_SPECS[car]["max_speed"],
             cls.CAR_SPECS[car]["drag_coef"],
             cls.CAR_SPECS[car]["time_to_max"],
@@ -44,29 +46,36 @@ class Competition:
     def __init__(self, distance):
         self._distance = distance
 
-    def start(self, competitors, wind):
-        weather = Weather(wind)
-        wind_speed = weather.wind_speed
+    def set_cars(self, competitors):
+        self.competitors = []
+        for car in competitors:
+            car_instance = Car.instance(car)
+            self.competitors.append(car_instance)
+
+    def set_weather(self, max_wind):
+        weather = Weather(max_wind)
+        self.wind_speed = weather.wind_speed
+
+    def start(self):
         results = {}
 
-        for competitor_name in competitors:
+        for competitor in self.competitors:
             competitor_time = 0
-            car = Car.instance(competitor_name)
 
             for distance in range(self._distance):
                 if competitor_time == 0:
                     _speed = 1
                 else:
-                    _speed = (competitor_time / car.time_to_max) * car.max_speed
-                    if _speed > wind_speed:
-                        _speed -= (car.drag_coef * wind_speed)
-                    if _speed > car.max_speed:
-                        _speed = car.max_speed
+                    _speed = (competitor_time / competitor.time_to_max) * competitor.max_speed
+                    if _speed > self.wind_speed:
+                        _speed -= (competitor.drag_coef * self.wind_speed)
+                    if _speed > competitor.max_speed:
+                        _speed = competitor.max_speed
 
                 competitor_time += float(1) / _speed
 
-            print("Car <%s> result: %f" % (competitor_name, competitor_time))
-            results[competitor_name] = competitor_time
+            print("Car <%s> result: %f" % (competitor.name, competitor_time))
+            results[competitor.name] = competitor_time
 
         print("WINNER! {} wins!".format(sorted(results.items(), key=lambda x: x[1])[0][0]))
 
@@ -74,5 +83,7 @@ class Competition:
 if __name__ == '__main__':
     cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
     competition = Competition(10000)
-    competition.start(cars, 20)  #get competitors and max_wind_speed
+    competition.set_cars(cars)
+    competition.set_weather(20)
+    competition.start()
 
