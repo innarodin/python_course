@@ -47,14 +47,11 @@ class Competition:
         self._distance = distance
 
     def set_cars(self, competitors):
-        self.competitors = []
-        for car in competitors:
-            car_instance = Car.instance(car)
-            self.competitors.append(car_instance)
+        self.competitors = competitors
 
     def set_weather(self, max_wind):
         weather = Weather(max_wind)
-        self.wind_speed = weather.wind_speed
+        self.weather = weather
 
     def start(self):
         results = {}
@@ -67,8 +64,8 @@ class Competition:
                     _speed = 1
                 else:
                     _speed = (competitor_time / competitor.time_to_max) * competitor.max_speed
-                    if _speed > self.wind_speed:
-                        _speed -= (competitor.drag_coef * self.wind_speed)
+                    if _speed > self.weather.wind_speed:
+                        _speed -= (competitor.drag_coef * self.weather.wind_speed)
                     if _speed > competitor.max_speed:
                         _speed = competitor.max_speed
 
@@ -82,8 +79,13 @@ class Competition:
 
 if __name__ == '__main__':
     cars = ['ferrary', 'bugatti', 'toyota', 'lada', 'sx4']
+    competitors = []
+    for car in cars:
+        car_instance = Car.instance(car)
+        competitors.append(car_instance)
+
     competition = Competition(10000)
-    competition.set_cars(cars)
+    competition.set_cars(competitors)
     competition.set_weather(20)
     competition.start()
 
