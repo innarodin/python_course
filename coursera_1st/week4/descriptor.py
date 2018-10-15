@@ -16,7 +16,7 @@ class Account:
         self.commission = commission
 
 
-new_account = Account(0.1)
-new_account.amount = 100
+#new_account = Account(0.1)
+#new_account.amount = 100
 
-print(new_account.amount)
+#print(new_account.amount)

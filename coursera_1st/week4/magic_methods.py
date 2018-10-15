@@ -39,11 +39,11 @@ class File:
         return self.path
 
 
-first = File('/home/clara/jupyter/python_course/coursera_1st/1.txt')
-second = File('/home/clara/jupyter/python_course/coursera_1st/2.txt')
-new_obj = first + second
+#first = File('/home/clara/jupyter/python_course/coursera_1st/1.txt')
+#second = File('/home/clara/jupyter/python_course/coursera_1st/2.txt')
+#new_obj = first + second
 
-for i in first:
-    print(i)
+#for i in first:
+#    print(i)
 
-print(first)
+#print(first)

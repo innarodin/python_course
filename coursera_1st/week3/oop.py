@@ -112,5 +112,5 @@ def get_car_list(csv_filename):
 
     return car_list
 
-get_car_list("/home/clara/Загрузки/coursera_week3_cars.csv")
+#get_car_list("/home/clara/Загрузки/coursera_week3_cars.csv")
 

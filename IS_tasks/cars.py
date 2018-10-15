@@ -18,13 +18,16 @@ class Car:
 
     @classmethod
     def instance(cls, car):
-        return cls(
-            car,
-            cls.CAR_SPECS[car]["max_speed"],
-            cls.CAR_SPECS[car]["drag_coef"],
-            cls.CAR_SPECS[car]["time_to_max"],
-        )
-
+        try:
+            return cls(
+                car,
+                cls.CAR_SPECS[car]["max_speed"],
+                cls.CAR_SPECS[car]["drag_coef"],
+                cls.CAR_SPECS[car]["time_to_max"],
+            )
+        except KeyError:
+            print("<{}> is a wrong car!".format(car))
+            return
 
 class Weather:
     def __init__(self, max_wind_speed):
@@ -43,8 +46,10 @@ class Competition:
 
         return cls.instance
 
-    def __init__(self, distance):
+    def __init__(self, distance=0):
         self._distance = distance
+        self.competitors = []
+        self.weather = None
 
     def set_cars(self, competitors):
         self.competitors = competitors
@@ -55,8 +60,18 @@ class Competition:
 
     def start(self):
         results = {}
+        if len(self.competitors) == 0:
+            print("You can't start a competition without competitors! Please, set cars")
+            return
+
+        if self.weather is None:
+            print("You can't start a competition without setting weather! Please, set weather")
+            return
 
         for competitor in self.competitors:
+            if competitor is None:
+                continue
+
             competitor_time = 0
 
             for distance in range(self._distance):
